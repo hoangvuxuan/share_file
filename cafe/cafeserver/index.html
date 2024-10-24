@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm - CafeDB</title>
+    <style>
+        table {
+            width: 80%;
+            margin: 50px auto;
+            border-collapse: collapse;
+            font-size: 18px;
+        }
+        table th, table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        table img {
+            max-width: 100px;
+            height: auto;
+        }
+        .loading {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center">Danh sách sản phẩm</h2>
+
+<div class="loading">Đang tải dữ liệu...</div>
+
+<table id="productTable" style="display:none">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Hình ảnh</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Dữ liệu sẽ được thêm vào đây bằng JavaScript -->
+    </tbody>
+</table>
+
+<script>
+    // Sử dụng AJAX để gọi API get_data.php
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "get_data.php", true);
+    xhr.onload = function () {
+        if (xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            const productTable = document.getElementById('productTable');
+            const loadingDiv = document.querySelector('.loading');
+
+            if (response.status === 'success') {
+                if (response.data.length > 0) {
+                    let tableBody = productTable.querySelector('tbody');
+                    response.data.forEach(product => {
+                        let row = document.createElement('tr');
+
+                        // Tạo các ô trong bảng (các cột ID, Tên, Giá, Hình ảnh)
+                        let idCell = document.createElement('td');
+                        idCell.textContent = product.id;
+                        row.appendChild(idCell);
+
+                        let nameCell = document.createElement('td');
+                        nameCell.textContent = product.name;
+                        row.appendChild(nameCell);
+
+                        let priceCell = document.createElement('td');
+                        priceCell.textContent = product.price;
+                        row.appendChild(priceCell);
+
+                        let pictureCell = document.createElement('td');
+                        let img = document.createElement('img');
+                        img.src = product.picture; // Đường dẫn ảnh
+                        pictureCell.appendChild(img);
+                        row.appendChild(pictureCell);
+
+                        // Thêm hàng vào bảng
+                        tableBody.appendChild(row);
+                    });
+
+                    // Hiển thị bảng và ẩn thông báo tải dữ liệu
+                    productTable.style.display = 'table';
+                    loadingDiv.style.display = 'none';
+                } else {
+                    loadingDiv.textContent = 'Không có dữ liệu';
+                }
+            } else {
+                loadingDiv.textContent = 'Lỗi tải dữ liệu';
+            }
+        } else {
+            document.querySelector('.loading').textContent = 'Lỗi kết nối: ' + xhr.statusText;
+        }
+    };
+
+    // Gửi yêu cầu AJAX
+    xhr.send();
+</script>
+
+</body>
+</html>
