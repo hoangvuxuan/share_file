@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- EditText cho ngày bắt đầu -->
+    <EditText
+        android:id="@+id/start_date_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Start date (yyyy-mm-dd)"
+        android:inputType="date" />
+
+    <!-- EditText cho ngày kết thúc -->
+    <EditText
+        android:id="@+id/end_date_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="End date (yyyy-mm-dd)"
+        android:inputType="date" />
+
+    <!-- Nút tìm kiếm -->
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search" />
+
+    <!-- TextView để hiển thị kết quả -->
+    <TextView
+        android:id="@+id/all_tracks_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:text="Tracks info will appear here" />
+
+</LinearLayout>
